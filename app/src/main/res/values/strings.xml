@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Translator</string>
+    <string name="translate">translate</string>
+    <string name="title_activity_language_list">Available language</string>
+</resources>

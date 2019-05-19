@@ -52,7 +52,7 @@ public class Languages extends ListActivity {
             "lb","jv","mg","ja","ms"
     };
 
-    ArrayAdapter<String> mAdapter = null;
+    ArrayAdapter<String> mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

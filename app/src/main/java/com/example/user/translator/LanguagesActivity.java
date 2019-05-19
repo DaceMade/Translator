@@ -6,11 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-public class Languages extends ListActivity {
+public class LanguagesActivity extends ListActivity {
 
-    final String[] languages = new String[]{
+    final static String[] LANGUAGES = new String[]{
             "Russian", "English", "French", "German", "Spanish",
             "Azerbaijani", "Malayalam", "Albanian", "Maltese", "Amharic",
             "Macedonian", "Maori", "Arabic", "Marathi", "Armenian", "Mari",
@@ -31,7 +30,7 @@ public class Languages extends ListActivity {
             "Luxembourgish", "Javanese", "Malagasy", "Japanese", "Malay"
     };
 
-    final String[] languagesCode = new String[]{
+    final static String[] LANGUAGES_CODE = new String[]{
             "ru", "en", "fr", "de", "es",
             "az", "ml", "sq", "mt", "am",
             "mk", "mi", "ar", "mr", "hy", "mhr",
@@ -47,9 +46,9 @@ public class Languages extends ListActivity {
             "it", "te", "is", "tr", "udm",
             "kk", "uz", "kn", "uk", "ca", "ur",
             "ky", "fi", "zh", "ko", "hi",
-            "hr","xh","km","cs","lo","sw",
-            "la","gd","lv","et","lt","eo",
-            "lb","jv","mg","ja","ms"
+            "hr", "xh", "km", "cs", "lo", "sw",
+            "la", "gd", "lv", "et", "lt", "eo",
+            "lb", "jv", "mg", "ja", "ms"
     };
 
     ArrayAdapter<String> mAdapter;
@@ -58,18 +57,17 @@ public class Languages extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, languages);
+        mAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, LANGUAGES);
         setListAdapter(mAdapter);
     }
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
         Intent intent = new Intent(this, MainActivity.class);
         if (MainActivity.isOnFirstClick) {
-            MainActivity.currLang1 = languagesCode[position];
+            MainActivity.currLang1 = LANGUAGES_CODE[position];
         } else {
-            MainActivity.currLang2 = languagesCode[position];
+            MainActivity.currLang2 = LANGUAGES_CODE[position];
         }
         startActivity(intent);
     }

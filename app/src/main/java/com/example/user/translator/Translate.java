@@ -10,7 +10,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 public class Translate {
-    private static String KEY = "trnsl.1.1.20190206T154559Z.258d51a8f7a70874.7867fce499f3f1d1e94f7fdb2800632b04ec896f";
+    private final static String KEY = "trnsl.1.1.20190206T154559Z.258d51a8f7a70874.7867fce499f3f1d1e94f7fdb2800632b04ec896f";
     private final int FIRST_BRACKET_POSITION = 34;
 
 
@@ -25,16 +25,8 @@ public class Translate {
     }
 
     public Translate(String text) {
-        this.firstLang = "en";
-        this.secondLang = "ru";
-        this.text = text;
+        this("en", "ru", text);
     }
-
-    /*public String getAvailLanguages() throws Exception {
-        String availLanguages = "https://translate.yandex.net/api/v1.5/tr.json/getLangs?ui=en&key=" + KEY;
-        String htmlCode = get(availLanguages);
-        return htmlCode;
-    }*/
 
     public void getTranslate(CallBack callBack) throws Exception {
 
@@ -52,7 +44,7 @@ public class Translate {
     }
 
 
-    private  void get(String url, CallBack callBack) throws Exception {
+    private void get(String url, CallBack callBack) {
         new Thread(() -> {
             try {
                 URL obj = new URL(url);
@@ -73,7 +65,6 @@ public class Translate {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }).start();
     }
 }

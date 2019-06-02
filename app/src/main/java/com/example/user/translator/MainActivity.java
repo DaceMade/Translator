@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     public static final String KEY = "trnsl.1.1.20190206T154559Z.258d51a8f7a70874.7867fce499f3f1d1e94f7fdb2800632b04ec896f";
 
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     static String currLang1 = "en";
     static String currLang2 = "ru";
     static boolean isOnFirstClick = false;
+    static List<TranslateData> tranlationsDB;
 
     AppDatabase db = App.getInstance().getDatabase();
     TranslateDataDao dao = db.translateDataDao();
@@ -39,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
         firstLang.setText(currLang1);
         secondLang.setText(currLang2);
         inputText.setText(lastText);
+
+        //Старт параллельного потока для получения БД
+        new Thread(() -> tranlationsDB = dao.getAll()).start();
 
         firstLang.setOnClickListener(v -> startLanguagesActivity(true));
 
@@ -72,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             });
             idCount = dao.getAll().size();
             dao.insert(new TranslateData(idCount, firstLangString + "-" + secondLangString, inputTextString, outputText.getText().toString()));
+            tranlationsDB = dao.getAll();
         });
 
 

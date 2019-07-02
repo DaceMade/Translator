@@ -3,6 +3,8 @@ package com.example.user.translator;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
     public Button secondLang;
     public Button switchButton;
     public EditText inputText;
+    public RecyclerView translationViev;
+    public TranslateAdapter translateAdapter;
 
     static String lastText;
     static int idCount;
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         firstLang = findViewById(R.id.firstLang);
         secondLang = findViewById(R.id.secondLang);
         inputText = findViewById(R.id.inputText);
+        translationViev = findViewById(R.id.RecyclerViev);
 
         firstLang.setText(currLang1);
         secondLang.setText(currLang2);
@@ -45,6 +50,15 @@ public class MainActivity extends AppCompatActivity {
 
         //Старт параллельного потока для получения БД
         new Thread(() -> tranlationsDB = dao.getAll()).start();
+
+        //Layout Manager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        translationViev.setLayoutManager(layoutManager);
+        translationViev.setHasFixedSize(true);
+
+        //Adapter
+        translateAdapter = new TranslateAdapter(tranlationsDB);
+        translationViev.setAdapter(translateAdapter);
 
         firstLang.setOnClickListener(v -> startLanguagesActivity(true));
 

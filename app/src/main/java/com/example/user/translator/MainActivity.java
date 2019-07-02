@@ -49,16 +49,20 @@ public class MainActivity extends AppCompatActivity {
         inputText.setText(lastText);
 
         //Старт параллельного потока для получения БД
-        new Thread(() -> tranlationsDB = dao.getAll()).start();
+        new Thread(() -> {
+            tranlationsDB = dao.getAll();
+            runOnUiThread(() ->{
+                translateAdapter = new TranslateAdapter(tranlationsDB);
+                //Layout Manager
+                LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+                translationViev.setLayoutManager(layoutManager);
+                translationViev.setHasFixedSize(true);
 
-        //Layout Manager
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        translationViev.setLayoutManager(layoutManager);
-        translationViev.setHasFixedSize(true);
+                //Adapter
+                translationViev.setAdapter(translateAdapter);
+            });
+        }).start();
 
-        //Adapter
-        translateAdapter = new TranslateAdapter(tranlationsDB);
-        translationViev.setAdapter(translateAdapter);
 
         firstLang.setOnClickListener(v -> startLanguagesActivity(true));
 
